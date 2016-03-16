@@ -1,0 +1,39 @@
+body
+  .ui.center.aligned.container
+    h1.ui.massive.block.header Meteor For EdTech
+    +audience
+
+template(name="audience")
+  +questions
+  +ask
+
+template(name="questions")
+  .ui.stacked.left.aligned.segment
+    .ui.huge.dividing.header Questions:
+    if hasQuestions
+      .ui.divided.massive.list
+        each questions
+          +question
+    else
+      .ui.centered.text No questions yet :(    
+
+template(name="question")
+  .item
+    .right.floated.content
+      unless hasVoted
+        button.ui.green.right.floated.icon.button#vote
+          i.icon.chevron.up
+          | #{votes}
+      else
+        button.ui.disabled.right.floated.icon.button
+          i.icon.chevron.up
+          | #{votes}
+    .content
+      .header=text
+
+template(name="ask")
+  .ui.massive.left.icon.right.labeled.input(class="{{#unless questionsLeft}}disabled{{/unless}}")
+    input#question-input(placeholder="Your question")
+    i.comment.icon
+    .ui.basic.label
+      | #{questionsLeft} questions left
